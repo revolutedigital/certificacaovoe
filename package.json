@@ -2,10 +2,10 @@
   "name": "certificacao-voe",
   "version": "1.0.0",
   "description": "Landing Page - Licenciamento Escola Voe",
-  "main": "index.html",
+  "main": "server.js",
   "scripts": {
-    "start": "python3 -m http.server 8080",
-    "dev": "python3 -m http.server 8080"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "keywords": [
     "voe",
@@ -13,5 +13,11 @@
     "licenciamento"
   ],
   "author": "Revolute Digital",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
