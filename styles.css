@@ -560,7 +560,7 @@ p {
 
 .method-features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--spacing-xl);
 }
 
@@ -671,7 +671,7 @@ p {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--spacing-lg);
 }
 
@@ -719,7 +719,7 @@ p {
 
 .pricing-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
     gap: var(--spacing-xl);
     max-width: 1000px;
     margin: 0 auto;
@@ -860,7 +860,7 @@ p {
 
 .deliverables-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
     gap: var(--spacing-xl);
 }
 
@@ -939,7 +939,7 @@ p {
 
 .differentials-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--spacing-xl);
 }
 
@@ -987,7 +987,7 @@ p {
 
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: var(--spacing-xl);
 }
 
@@ -1471,14 +1471,91 @@ p {
 }
 
 @media (max-width: 768px) {
+    /* Mobile Navigation */
     .nav {
-        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: var(--spacing-lg);
+        gap: var(--spacing-md);
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-base);
+        z-index: 999;
+    }
+
+    .nav.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav a {
+        padding: var(--spacing-sm) 0;
+        font-size: 1.125rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .nav a:last-child {
+        border-bottom: none;
     }
 
     .mobile-menu-toggle {
         display: flex;
     }
 
+    /* Hero Section Mobile - OTIMIZAÇÕES PRINCIPAIS */
+    .hero {
+        min-height: 85vh;
+        padding: 8rem 0 3rem;
+    }
+
+    .hero-overlay {
+        background: linear-gradient(135deg, rgba(255, 251, 245, 0.92) 0%, rgba(250, 249, 247, 0.88) 100%);
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-badge {
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .hero-title {
+        font-size: 2.25rem;
+        line-height: 1.2;
+        margin-bottom: var(--spacing-md);
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-subtitle {
+        font-size: 1.063rem;
+        line-height: 1.6;
+        margin-bottom: var(--spacing-lg);
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .hero-cta .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Content Sections */
     .about-voe-content {
         grid-template-columns: 1fr;
         gap: var(--spacing-xl);
@@ -1511,32 +1588,18 @@ p {
         padding-left: 0;
     }
 
-    .hero {
-        padding: 7rem 0 4rem;
-    }
-
-    .hero-title {
-        font-size: 2rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-
-    .hero-cta {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
     .hero-stats {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
     }
 
+    /* Pricing Cards - Fix minWidth issue */
     .pricing-cards {
         grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
     }
 
+    /* Grid Layouts */
     .method-features,
     .method-evidence,
     .deliverables-grid,
@@ -1546,13 +1609,13 @@ p {
         grid-template-columns: 1fr;
     }
 
-    .gallery-item img {
-        height: 280px;
+    /* Deliverables Grid - Fix minWidth */
+    .deliverables-grid {
+        grid-template-columns: 1fr;
     }
 
-    .hero {
-        min-height: 80vh;
-        padding: 7rem 0 4rem;
+    .gallery-item img {
+        height: 280px;
     }
 
     .footer-content {
@@ -1564,9 +1627,21 @@ p {
         text-align: center;
     }
 
+    /* Typography Adjustments */
     h1 { font-size: 2rem; }
     h2 { font-size: 1.75rem; }
     h3 { font-size: 1.375rem; }
+
+    /* Buttons - Better touch targets */
+    .btn {
+        min-height: 48px;
+        padding: 1rem 1.5rem;
+    }
+
+    .btn-large {
+        min-height: 52px;
+        padding: 1.125rem 1.75rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1574,14 +1649,41 @@ p {
         padding: 0 var(--spacing-md);
     }
 
+    /* Hero Section Extra Small Mobile */
+    .hero {
+        min-height: 90vh;
+        padding: 7rem 0 2rem;
+    }
+
+    .hero-overlay {
+        background: linear-gradient(135deg, rgba(255, 251, 245, 0.95) 0%, rgba(250, 249, 247, 0.92) 100%);
+    }
+
     .hero-title {
-        font-size: 1.75rem;
+        font-size: 1.875rem;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+        font-size: 0.938rem;
+        line-height: 1.6;
+    }
+
+    .hero-badge {
+        font-size: 0.688rem;
+        padding: 0.438rem 0.875rem;
     }
 
     .section-title {
-        font-size: 1.5rem;
+        font-size: 1.625rem;
     }
 
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    /* Pricing Cards */
     .pricing-cards {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
@@ -1591,6 +1693,15 @@ p {
         min-width: auto;
     }
 
+    .pricing-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .price-amount {
+        font-size: 1.5rem;
+    }
+
+    /* Images */
     .gallery-item img {
         height: 220px;
     }
@@ -1599,10 +1710,7 @@ p {
         font-size: 1.5rem;
     }
 
-    .hero {
-        min-height: 70vh;
-    }
-
+    /* Deliverables */
     .deliverables-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
@@ -1610,6 +1718,45 @@ p {
 
     .deliverable-card {
         min-width: auto;
+        padding: var(--spacing-lg);
+    }
+
+    /* Immersion Section */
+    .immersion-hero h3 {
+        font-size: 1.75rem;
+    }
+
+    /* Forms */
+    .contact-form {
+        padding: var(--spacing-lg);
+    }
+
+    /* Better touch targets for buttons */
+    .btn {
+        min-height: 52px;
+        font-size: 1rem;
+    }
+
+    .btn-large {
+        min-height: 56px;
+        font-size: 1.063rem;
+    }
+
+    /* Header adjustments */
+    .header-content {
+        padding: var(--spacing-md) 0;
+    }
+
+    .logo-img {
+        height: 40px;
+    }
+
+    /* Spacing adjustments for smaller screens */
+    :root {
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2.5rem;
+        --spacing-2xl: 3.5rem;
+        --spacing-3xl: 4.5rem;
     }
 }
 
