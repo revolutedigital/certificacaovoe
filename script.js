@@ -107,7 +107,7 @@ animateOnScroll.forEach(el => {
 });
 
 /* ===================================
-   FORM HANDLING
+   FORM HANDLING - WEBHOOK INTEGRATION
    =================================== */
 const contactForm = document.getElementById('contactForm');
 
@@ -142,19 +142,67 @@ if (contactForm) {
         `;
         document.head.appendChild(style);
 
-        // Simulate form submission (replace with actual API call)
-        setTimeout(() => {
-            // Show success message
+        try {
+            // Preparar dados para o webhook conforme documentação
+            const webhookData = {
+                Nome: data.name || '',
+                Email: data.email || '',
+                Fonezap: data.phone || '',
+                Empresa: data.school || '',
+                Prodserv: 'Licenciamento Escola VOE',
+                Valor: 0,
+                Infos: `Cidade: ${data.city || 'Não informado'}\nOpção: ${data.option || 'Não informado'}\nMensagem: ${data.message || 'Nenhuma'}`,
+                Origem: 'Landing Page Licenciamento',
+                Site: window.location.hostname,
+                Tag: data.option || 'licenciamento',
+                Token: 'GL1XIOMOH5FESY3K17ZZ'
+            };
+
+            // Enviar para o webhook
+            const response = await fetch('https://funilonline.app/api/1.1/wf/novolead', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(webhookData)
+            });
+
+            if (response.ok) {
+                // Show success message
+                submitButton.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Enviado com Sucesso!
+                `;
+                submitButton.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
+
+                // Reset form
+                contactForm.reset();
+
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalText;
+                    submitButton.style.background = '';
+                }, 3000);
+
+                console.log('Lead enviado com sucesso!', webhookData);
+            } else {
+                throw new Error('Erro ao enviar formulário');
+            }
+
+        } catch (error) {
+            console.error('Erro:', error);
+
+            // Show error message
             submitButton.innerHTML = `
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 2L2 18H18L10 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Mensagem Enviada!
+                Erro ao enviar. Tente novamente.
             `;
-            submitButton.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
-
-            // Reset form
-            contactForm.reset();
+            submitButton.style.background = 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)';
 
             // Reset button after 3 seconds
             setTimeout(() => {
@@ -162,19 +210,7 @@ if (contactForm) {
                 submitButton.innerHTML = originalText;
                 submitButton.style.background = '';
             }, 3000);
-
-            // Log form data (replace with actual submission)
-            console.log('Form submitted:', data);
-
-            // Here you would typically send the data to your backend
-            // Example:
-            // fetch('/api/contact', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(data)
-            // });
-
-        }, 2000);
+        }
     });
 }
 
