@@ -284,6 +284,22 @@ p {
     color: white;
 }
 
+.btn-nav-white {
+    padding: 0.625rem 1.5rem;
+    background: white;
+    color: var(--primary);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: all var(--transition-base);
+}
+
+.btn-nav-white:hover {
+    background: var(--primary);
+    color: white;
+    border-color: white;
+}
+
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -1328,6 +1344,13 @@ p {
     border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: 0;
+}
+
 .form-group {
     margin-bottom: var(--spacing-md);
 }
@@ -1767,6 +1790,11 @@ p {
     /* Forms */
     .contact-form {
         padding: var(--spacing-lg);
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 
     /* Better touch targets for buttons */
